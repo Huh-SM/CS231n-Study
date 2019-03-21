@@ -4,6 +4,7 @@
 ## 일정
 - (03-20) Lecture 2 : Linear Classification
 - (03-21) Lecture 3 : Loss Function, Optimization, Stochastic Gradient Descent
+- (03-22) Lecture 4 : Introduction to Neural Network, BackPropagation
 
 ## Reference 
 - (Official Website) http://cs231n.stanford.edu/ 
