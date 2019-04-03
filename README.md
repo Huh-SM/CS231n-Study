@@ -12,15 +12,13 @@
 
 ### 논문 리뷰
 - BiDAF(Bi-Directinal Attention Flow)
-- Attention is All You Need
+- Attention is All You Need ( a.k.a. Transformers )
 - BERT : Pre-Training of Deep Bidirectional Transformers for Language Understanding
 
 ### 고민할것
 - Word Piece Model (???) 
 - KorQuAD 전처리를 어떻게 할지? WPM??
 - fine-tuning 은 어떻게?
-
-
 
 ## Reference 
 - (Official Website) http://cs231n.stanford.edu/ 
