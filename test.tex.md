@@ -3,7 +3,7 @@
 ## Concept
 - find $f(x)$ which has parameter(or weight) $ w $
 
-$\text{Input} \rightarrow f(x, W) = Wx \rightarrow  \text{output score}$
+$$\text{Input} \rightarrow f(x, W) = Wx \rightarrow  \text{output score}$$
 - Example :
 
 $$
