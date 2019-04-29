@@ -3,7 +3,7 @@
 ## Concept
 - find <img src="/tex/7997339883ac20f551e7f35efff0a2b9.svg?invert_in_darkmode&sanitize=true" align=middle width=31.99783454999999pt height=24.65753399999998pt/> which has parameter(or weight) <img src="/tex/e0d75638341aaa771a47999137d21473.svg?invert_in_darkmode&sanitize=true" align=middle width=12.210846449999991pt height=14.15524440000002pt/>
 
-<img src="/tex/428fcd8552b6cd7ed67d85daecbe2eda.svg?invert_in_darkmode&sanitize=true" align=middle width=286.73515695pt height=24.65753399999998pt/>
+<p align="center"><img src="/tex/40852839dbbdb0390f3fb896634b494f.svg?invert_in_darkmode&sanitize=true" align=middle width=286.73515695pt height=16.438356pt/></p>
 - Example :
 
 <p align="center"><img src="/tex/8d2381a80ac4dfc31b5d5afbc0ff0a16.svg?invert_in_darkmode&sanitize=true" align=middle width=764.37682365pt height=78.9048876pt/></p>
