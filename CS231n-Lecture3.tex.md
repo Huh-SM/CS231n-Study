@@ -11,15 +11,19 @@ ___
 - 회귀에서도 error의 추정량의 제곱을 최소화 시키는 방법을 쓰듯..
 - Loss over datasets 
 $$ L = \frac{1}{N}\sum_i L_i(f(x_i, W), y_i) $$
+
 ___
 ### Multiclass Support Vector Machine loss (Multiclass SVM loss)
 - 이 손실함수의 idea는 어느 정도 허용수준($\Delta$)이상으로 정답 클래스의 score를 더 크게 하는 방향으로 설계한다는 것.(good방향)
 	- $\Delta$ 는 hyper-parameter로 정해줘야하는 부분이다.
 - formula
 $$ L_i = \sum_{j\neq y_i}\max(0, s_j-s_{y_i} + \Delta)$$
-- 만약 계산된 3개의 사진에서 고양이, 개, 개구리인지 판단하는 스코어가 각각 $S_1 = [3.2, 5.1, -1.7]$, $S_2 = [1.3, 4.9, 2.0]$, $S_3 = [2.2, 2.5, -3.1]$, $\Delta = 1$ 이라고 하면, 
- $ L_1 = max(0, 5.1-3.2+1) + max(0, -1.7-3.2+1) = 2.9$, $L_2 = max(0, 1.3-4.9+1) + max(0, 2.0 - 4.9 + 1) = 0 $, $L_3 = max(0, 2.2+3.1+1) + max(0, 2.5+3.1+1) = 12.9$  이며,<br>
+- 만약 계산된 3개의 사진에서 고양이, 개, 개구리인지 판단하는 스코어가 각각 $S_1 = [3.2, 5.1, -1.7]$ $S_2 = [1.3, 4.9, 2.0]$ $S_3 = [2.2, 2.5, -3.1]$ $\Delta = 1$ 이라고 하면, 
+ $ L_1 = max(0, 5.1-3.2+1) + max(0, -1.7-3.2+1) = 2.9$ 
+ $L_2 = max(0, 1.3-4.9+1) + max(0, 2.0 - 4.9 + 1) = 0 $ 
+ $L_3 = max(0, 2.2+3.1+1) + max(0, 2.5+3.1+1) = 12.9$  이며,<br>
  $ L = (2.9 + 0 + 12.9)/3 = 5.27 $ 이다.
+ 
 - Multi-SVM loss에 대해서 생각해야할 것이 몇가지 있는데, formula에 근거해서 생각하면 됨.
     - 만약 정답 카테고리의 score가 기존의 스코어의 순서를 바꾸지 않는 한에서 변하면 loss의 변화는? $\rightarrow$ loss는 변하지 않는다.
     - Multi SVM loss의 가능한 값의 영역은? $\rightarrow$ (0, $\infty$), $L_i$ 의 값은 음수가 나오지 않도록 설계되었음.
@@ -51,6 +55,7 @@ def L_i(x, y, W):
     # accumulate loss for the i-th example
     loss_i += max(0, scores[j] - correct_class_score + delta)
   return loss_i
+  
 
 def L_i_vectorized(x, y, W):
   """
@@ -74,7 +79,7 @@ ___
 - 이러한 문제를 해결하기 위해 도입한 것이 바로 정규화(Regularization *회귀분석 Lasso, Ridge, Elastic Net*..) 
 - 정규화를 간단히 말하면, 우리가 구할 parameter에 대해서 penalty를 부여해서 간단한 모델로 만들어주겠다는 idea. 성능 향상과 overfitting 방지에도 도움이 됨.
 - formula
-$$L(W)(full loss) = \frac{1}{N}\sum_{i=1}^N L_i(f(x_i, W), y_i) \text{(data loss)} + \lambda R(W) \text{(regularization loss)}$$
+$$L(W)\text{ (full loss)} = \frac{1}{N}\sum_{i=1}^N L_i(f(x_i, W), y_i) \text{(data loss)} + \lambda R(W) \text{ (regularization loss)}$$
 - Regularization 종류가 많음. 머신러닝, 딥러닝에도 많이 적용 됨.
     - L2 Regularization : (L2 norm) $\sum_k\sum_lW^2_{k,l} or \sum_k\sum_l\sqrt{W_{k,l}} $
     - L1 Regularization : (L1 norm) $\sum_k\sum_l|{W_{k,l}}|$ $\rightarrow$ encouraging sparsity. 파라미터가 적은 방향을 지향함. 통계학에서 Ridge의 경우 가설검정을 동반한다고 표현.
@@ -112,6 +117,7 @@ $$ Pr(y_K|x) = \frac{1}{1+\sum_{i \neq K}e^{f_{y_i}(x;W)}}$$
 $$ Pr(y_i|x) = e^{f_{y_i}(x;W)}Pr(y_K|x)$$
 $$ Pr(y_i|x) = e^{f_{y_i}(x;W)}\frac{1}{1+\sum_{i \neq K}e^{f_{y_i}(x;W)}}$$
 $$ Pr(y_i|x) = \frac{e^{f_{y_i}(x;W)}}{\sum e^{f_{y_i}(x;W)}}$$
+
 ___
 ### Softmax Classifier(Multinomial Logistic Regression) 
 - **이제부터 확률로 생각합니다 만세~**
@@ -121,7 +127,7 @@ ___
 $$ L_i = -logPr(y=k|X=x_i) = -log\frac{e^{s_k}}{\sum_j e^{s_j}}$$
 - 왜 -log? 확률의 특성을 생각해서 1에 가까워지면 Loss가 최소가 되도록 Tuning한 것.
 - e.g. 고양이, 개, 개구리의 score가 $[3.2, 5.1, -1.7]$ 이라고하면 <br>
-$[3.2, 5.1, -1.7]$ $\rightarrow$exp $[24.5, 164.0, 0.18]$ $\rightarrow$normal $[0.13, 0.87, 0.00]$ $\rightarrow$ $L_i = -log(0.13) = 0.89 $
+$[3.2, 5.1, -1.7]\rightarrow exp[24.5, 164.0, 0.18]\rightarrow normal[0.13, 0.87, 0.00]\rightarrowL_i = -log(0.13) = 0.89 $
 - softmax도 몇가지 생각해볼 거리가 있음.
     - loss의 가능한 영역은? $\rightarrow$ (0, $\infty$) 확률의 [0,1] 영역과 -log의 특성을 보면 알 수 있음.
     - $W$ 학습의 첫 iteration에서 $s\approx0$ 인 상황이 벌어지면 loss는? $\rightarrow$ logC, 역시 Debugging에 효율적임
@@ -133,6 +139,7 @@ $[3.2, 5.1, -1.7]$ $\rightarrow$exp $[24.5, 164.0, 0.18]$ $\rightarrow$normal $[
 - 또한 Cross Entropy는 Statistics 에서의 MLE 방법과 정확히 일치함.
     - negative log-likelihood를 minimize하는 것이므로 MLE와 정확히 일치함. 
 - 계산적인 측면에서 컴퓨팅 문제가 있어 실제 구현할때는 상수 C를 위아래로 곱해줌.
+
 ___
 ### Multiclass SVM loss & Softmax loss
 - 먼저 각각의 Loss 결과를 통해 얻은 스코어, 확률은 각각의 방법 안에서만 비교하는 것이 의미가 있음.
