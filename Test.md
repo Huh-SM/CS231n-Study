@@ -1,11 +1,9 @@
 # CS231n - Lecture 2
 
 ## Concept
-- find <img src="https://latex.codecogs.com/svg.latex?\Large&space;f(x)" /> which has parameter(or weight)<img src="https://latex.codecogs.com/svg.latex?\Large&space;w" />
+- find <img src="https://latex.codecogs.com/svg.latex?\Large&space;f(x)" /> which has parameter(or weight) <img src="https://latex.codecogs.com/svg.latex?\Large&space;w" />
 
-
-
-$$\text{Input} \rightarrow f(x, W) = Wx \rightarrow  \text{output score}$$
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;$$\text{Input} \rightarrow f(x, W) = Wx \rightarrow  \text{output score}$$" />
 - Example :
 
 $$
