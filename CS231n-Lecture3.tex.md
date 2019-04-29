@@ -21,16 +21,16 @@ $$ L_i = \sum_{j\neq y_i}\max(0, s_j-s_{y_i} + \Delta)$$
 - 만약 계산된 3개의 사진에서 고양이, 개, 개구리인지 판단하는 스코어가 각각 $S_1 = [3.2, 5.1, -1.7]$ $S_2 = [1.3, 4.9, 2.0]$ $S_3 = [2.2, 2.5, -3.1]$ $\Delta = 1$ 이라고 하면, 
  $ L_1 = max(0, 5.1-3.2+1) + max(0, -1.7-3.2+1) = 2.9$ 
  $L_2 = max(0, 1.3-4.9+1) + max(0, 2.0 - 4.9 + 1) = 0 $ 
- $L_3 = max(0, 2.2+3.1+1) + max(0, 2.5+3.1+1) = 12.9$  이며,<br>
- $ L = (2.9 + 0 + 12.9)/3 = 5.27 $ 이다.
+ $L_3 = max(0, 2.2+3.1+1) + max(0, 2.5+3.1+1) = 12.9$  
+ $ L = (2.9 + 0 + 12.9)/3 = 5.27 $ 
  
 - Multi-SVM loss에 대해서 생각해야할 것이 몇가지 있는데, formula에 근거해서 생각하면 됨.
-    - 만약 정답 카테고리의 score가 기존의 스코어의 순서를 바꾸지 않는 한에서 변하면 loss의 변화는? $\rightarrow$ loss는 변하지 않는다.
-    - Multi SVM loss의 가능한 값의 영역은? $\rightarrow$ (0, $\infty$), $L_i$ 의 값은 음수가 나오지 않도록 설계되었음.
-    - $W$ 학습의 첫 iteration에서 $s\approx0$ 인 상황이 벌어지면 loss는? $\rightarrow$ loss = C-1, $\Delta=1$ 이라는 가정하에 이게 성립함. Debugging 시 유용한 방법.
-    - Multi SVM loss의 경우 정답 카테고리와 같은 카테고리를 계산하지 않지만, 만약 계산한다면? $\rightarrow$ $\Delta$ 만큼만 커지게 된다. 
-    - Summation을 하지 않고 mean을 사용하게 되면? $\rightarrow$ C-1(constant) 만큼의 scaling을 한 값으로 나올뿐 크게 변하지 않음.
-    - max의 sqaured version?(L2-SVM) $\rightarrow$ 이는 결과에 대해서 큰 차이를 불러온다고 함. Loss가 큰 경우에 대해 Penalty를 더 부여하는 효과를 가져와 차이가 있음. 이는 데이터에 따라 결정해야하는 부분임. CV 과정에서 판단할 수 있다고 함.
+- 만약 정답 카테고리의 score가 기존의 스코어의 순서를 바꾸지 않는 한에서 변하면 loss의 변화는? $\rightarrow$ loss는 변하지 않는다.
+- Multi SVM loss의 가능한 값의 영역은? $\rightarrow$ (0, $\infty$), $L_i$ 의 값은 음수가 나오지 않도록 설계되었음.
+- $W$ 학습의 첫 iteration에서 $s\approx0$ 인 상황이 벌어지면 loss는? $\rightarrow$ loss = C-1, $\Delta=1$ 이라는 가정하에 이게 성립함. Debugging 시 유용한 방법.
+- Multi SVM loss의 경우 정답 카테고리와 같은 카테고리를 계산하지 않지만, 만약 계산한다면? $\rightarrow$ $\Delta$ 만큼만 커지게 된다. 
+- Summation을 하지 않고 mean을 사용하게 되면? $\rightarrow$ C-1(constant) 만큼의 scaling을 한 값으로 나올뿐 크게 변하지 않음.
+- max의 sqaured version?(L2-SVM) $\rightarrow$ 이는 결과에 대해서 큰 차이를 불러온다고 함. Loss가 큰 경우에 대해 Penalty를 더 부여하는 효과를 가져와 차이가 있음. 이는 데이터에 따라 결정해야하는 부분임. CV 과정에서 판단할 수 있다고 함.
 - 일반적으로 max(0, ?) 꼴의 경우 **hinge loss** 라는 말로 불리기도 함.
 - 아래는 Multiclass SVM loss 의 구현버젼.
 
@@ -81,13 +81,11 @@ ___
 - formula
 $$L(W)\text{ (full loss)} = \frac{1}{N}\sum_{i=1}^N L_i(f(x_i, W), y_i) \text{(data loss)} + \lambda R(W) \text{ (regularization loss)}$$
 - Regularization 종류가 많음. 머신러닝, 딥러닝에도 많이 적용 됨.
-    - L2 Regularization : (L2 norm) $\sum_k\sum_lW^2_{k,l} or \sum_k\sum_l\sqrt{W_{k,l}} $
-    - L1 Regularization : (L1 norm) $\sum_k\sum_l|{W_{k,l}}|$ $\rightarrow$ encouraging sparsity. 파라미터가 적은 방향을 지향함. 통계학에서 Ridge의 경우 가설검정을 동반한다고 표현.
-        - 여기서 첨언하자면, L2와 L1의 형태에 대해서 생각해보면 이유를 알 수 있음. L2는 원형꼴을 따르며, L1은 마름모 꼴을 따르게 됨. 따라서 만약 마름모의 꼭지점에 걸려버리면, 그 지점은 일부 파라미터가 0 값이 지정됨. 이러한 이유로 sparsity를 지원하는듯.
-    - Elastic Net(L1+L2)
-    - Max Norm Regularization
-    - Dropout - DL에 많이 사용
-    - Batch Normalization, Stochastic depth - DL에 많이 사용
+- L2 Regularization : (L2 norm) $\sum_k\sum_lW^2_{k,l} or \sum_k\sum_l\sqrt{W_{k,l}} $
+- L1 Regularization : (L1 norm) $\sum_k\sum_l|{W_{k,l}}|$ $\rightarrow$ encouraging sparsity. 파라미터가 적은 방향을 지향함. 통계학에서 Ridge의 경우 가설검정을 동반한다고 표현.
+- 여기서 첨언하자면, L2와 L1의 형태에 대해서 생각해보면 이유를 알 수 있음. L2는 원형꼴을 따르며, L1은 마름모 꼴을 따르게 됨. 따라서 만약 마름모의 꼭지점에 걸려버리면, 그 지점은 일부 파라미터가 0 값이 지정됨. 이러한 이유로 sparsity를 지원하는듯.
+- cf) Elastic Net(L1+L2) /  Max Norm Regularization / Dropout - DL에 많이 사용 / Batch Normalization, Stochastic depth - DL에 많이 사용
+
 ___
 ### hyper-parameter?
 - 이제 현실적으로 우리가 지정해줘야할 hyper-parameter가 남았음. $\Delta$와 $\lambda$.
@@ -98,8 +96,8 @@ ___
 ___
 ### Additional Consideration
 - the # of classes = 2? $\rightarrow$ Binary SVM
-    - Loss function : $L_i=Cmax(0,1−y_iw^Tx_i)+R(W)$ $(-1<y_i<1)$
-    - $C$ 역시 hyper-parameter인데, multiclass에서의 $\lambda$와 비슷함. 관계는 $C\propto1/\lambda$.
+- Loss function : $L_i=Cmax(0,1−y_iw^Tx_i)+R(W)$ $(-1<y_i<1)$
+- $C$ 역시 hyper-parameter인데, multiclass에서의 $\lambda$와 비슷함. 관계는 $C\propto1/\lambda$.
 - 기존 SVM과 관계가 많다고 하는데... 제가 SVM를 몰라서 ㅈㅅ합니다. 다시 찾아올게요.
 
 ___
@@ -128,26 +126,25 @@ $$ L_i = -logPr(y=k|X=x_i) = -log\frac{e^{s_k}}{\sum_j e^{s_j}}$$
 - 왜 -log? 확률의 특성을 생각해서 1에 가까워지면 Loss가 최소가 되도록 Tuning한 것.
 - e.g. 고양이, 개, 개구리의 score가 $[3.2, 5.1, -1.7]$ 이라고하면 <br>
 $[3.2, 5.1, -1.7]\rightarrow exp[24.5, 164.0, 0.18]\rightarrow normal[0.13, 0.87, 0.00]\rightarrowL_i = -log(0.13) = 0.89 $
-- softmax도 몇가지 생각해볼 거리가 있음.
-    - loss의 가능한 영역은? $\rightarrow$ (0, $\infty$) 확률의 [0,1] 영역과 -log의 특성을 보면 알 수 있음.
-    - $W$ 학습의 첫 iteration에서 $s\approx0$ 인 상황이 벌어지면 loss는? $\rightarrow$ logC, 역시 Debugging에 효율적임
+- softmax도 몇가지 생각해볼 거리가 있음. <br>
+1) loss의 가능한 영역은? $\rightarrow$ (0, $\infty$) 확률의 [0,1] 영역과 -log의 특성을 보면 알 수 있음. <br>
+2)$W$ 학습의 첫 iteration에서 $s\approx0$ 인 상황이 벌어지면 loss는? $\rightarrow$ logC, 역시 Debugging에 효율적임
 - softmax 는 Full Cross Entropy 라고도 함. 왜냐?
-    - Information Theory에서 Cross Entropy는 true 분포의 p(x) 와 예측된 q(x) 간의 관계를 이용해 만든 식임.
+- Information Theory에서 Cross Entropy는 true 분포의 p(x) 와 예측된 q(x) 간의 관계를 이용해 만든 식임.
     $$ H(p,q) = -\sum_x p(x)logq(x) $$
-    - 여기서 p(x)는 정답 카테고리이기 떄문에 1이 반환되고, q(x)는 우리가 예측한 확률이 지정되는 형태를 갖게 되어 정확히 형태가 일치하게 됨
-    - True 집단과 Estimated 집단의 분포를을 비교하는 KL divergence적인 관점에서도 바라볼 수 있음. 다시 말해, 정답 카테고리의 분포에 최대한 비슷하게 갖다 붙여보겠다는 idea를 가진 것.
-- 또한 Cross Entropy는 Statistics 에서의 MLE 방법과 정확히 일치함.
-    - negative log-likelihood를 minimize하는 것이므로 MLE와 정확히 일치함. 
+- 여기서 p(x)는 정답 카테고리이기 떄문에 1이 반환되고, q(x)는 우리가 예측한 확률이 지정되는 형태를 갖게 되어 정확히 형태가 일치하게 됨
+- True 집단과 Estimated 집단의 분포를을 비교하는 KL divergence적인 관점에서도 바라볼 수 있음. 다시 말해, 정답 카테고리의 분포에 최대한 비슷하게 갖다 붙여보겠다는 idea를 가진 것.
+- 또한 Cross Entropy는 Statistics 에서의 MLE 방법과 정확히 일치함. negative log-likelihood를 minimize하는 것이므로 MLE와 정확히 일치함. 
 - 계산적인 측면에서 컴퓨팅 문제가 있어 실제 구현할때는 상수 C를 위아래로 곱해줌.
 
 ___
 ### Multiclass SVM loss & Softmax loss
 - 먼저 각각의 Loss 결과를 통해 얻은 스코어, 확률은 각각의 방법 안에서만 비교하는 것이 의미가 있음.
 - Softmax의 경우 결과로 확률을 제공한다는 점에서 신뢰성이 높다고 생각할 수 있다. 하지만, 이는 Regularization의 영향이 강해서 직접적으로 해석하는데 문제가 있다. $\lambda$를 통해 강한 제약을 건다면, 확률이 유니폼 형태에 가까워지므로 곧이 곧대로 해석할 수 없다.
-- SVM과 Softmax를 비교하면,
-    - SVM의 경우 loss가 최소화되는 margin을 만족하면 거기서 더이상 개선하려고 하지 않음.
-    - 하지만 Softmax의 경우는 계속 더 나은 결과를 찾기위해 계산을 수행함.
-    
+- SVM과 Softmax를 비교하면, <br>
+1) SVM의 경우 loss가 최소화되는 margin을 만족하면 거기서 더이상 개선하려고 하지 않음. <br>
+2) 하지만 Softmax의 경우는 계속 더 나은 결과를 찾기위해 지속적으로 계산을 수행함.    
+
 ---
 ## How? Optimization!
 - Loss function을 이제 알았다면 이제 그것을 최소화 시키는 방법이 필요하다. 
