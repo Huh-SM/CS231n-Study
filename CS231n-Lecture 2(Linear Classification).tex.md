@@ -23,8 +23,10 @@ $$
 \end{bmatrix} = \begin{bmatrix}
     -96.8 & \text{(Cat Score)} \\
     437.9 & \text{(Dog Score)} \\
-    61.95 & \text{(Ship Score)}
-\end{bmatrix}  
+    61.95 & \text{(Ship Score)} \\
+\end{bmatrix}  \\
+\\
+
 \\
 \\
 W(weight)X(input) + b(bias) = Score
