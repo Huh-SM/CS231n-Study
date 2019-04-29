@@ -11,15 +11,19 @@ ___
 - 회귀에서도 error의 추정량의 제곱을 최소화 시키는 방법을 쓰듯..
 - Loss over datasets 
 <p align="center"><img src="/tex/ed664a1f56d03d5de2a46020ce85312f.svg?invert_in_darkmode&sanitize=true" align=middle width=194.14203104999999pt height=41.10931275pt/></p>
+
 ___
 ### Multiclass Support Vector Machine loss (Multiclass SVM loss)
 - 이 손실함수의 idea는 어느 정도 허용수준(<img src="/tex/7e9fe18dc67705c858c077c5ee292ab4.svg?invert_in_darkmode&sanitize=true" align=middle width=13.69867124999999pt height=22.465723500000017pt/>)이상으로 정답 클래스의 score를 더 크게 하는 방향으로 설계한다는 것.(good방향)
 	- <img src="/tex/7e9fe18dc67705c858c077c5ee292ab4.svg?invert_in_darkmode&sanitize=true" align=middle width=13.69867124999999pt height=22.465723500000017pt/> 는 hyper-parameter로 정해줘야하는 부분이다.
 - formula
 <p align="center"><img src="/tex/3010a3b8e3c3a4180737502486240c0d.svg?invert_in_darkmode&sanitize=true" align=middle width=217.20603464999996pt height=39.26959575pt/></p>
-- 만약 계산된 3개의 사진에서 고양이, 개, 개구리인지 판단하는 스코어가 각각 <img src="/tex/65cafcffa0765f555e3f314b94197bf6.svg?invert_in_darkmode&sanitize=true" align=middle width=138.9155922pt height=24.65753399999998pt/>, <img src="/tex/b3335b1b5f6bc000c6b11db1f99b9605.svg?invert_in_darkmode&sanitize=true" align=middle width=126.13015799999997pt height=24.65753399999998pt/>, <img src="/tex/2439867047b3d6df03ee8e82a3608071.svg?invert_in_darkmode&sanitize=true" align=middle width=138.9155922pt height=24.65753399999998pt/>, <img src="/tex/74c5d8b0bed1bc87f919cbc158fde18a.svg?invert_in_darkmode&sanitize=true" align=middle width=43.83551204999999pt height=22.465723500000017pt/> 이라고 하면, 
- <img src="/tex/64f62162627e2b7efb39973f1fa2a6ee.svg?invert_in_darkmode&sanitize=true" align=middle width=418.75552289999996pt height=24.65753399999998pt/>, <img src="/tex/f77dd5b437cfb0fd0e0863140c411a77.svg?invert_in_darkmode&sanitize=true" align=middle width=393.18465614999997pt height=24.65753399999998pt/>, <img src="/tex/5e47b9d64c7eae55c0a4211eaa217ad4.svg?invert_in_darkmode&sanitize=true" align=middle width=414.18929805pt height=24.65753399999998pt/>  이며,<br>
+- 만약 계산된 3개의 사진에서 고양이, 개, 개구리인지 판단하는 스코어가 각각 <img src="/tex/65cafcffa0765f555e3f314b94197bf6.svg?invert_in_darkmode&sanitize=true" align=middle width=138.9155922pt height=24.65753399999998pt/> <img src="/tex/b3335b1b5f6bc000c6b11db1f99b9605.svg?invert_in_darkmode&sanitize=true" align=middle width=126.13015799999997pt height=24.65753399999998pt/> <img src="/tex/2439867047b3d6df03ee8e82a3608071.svg?invert_in_darkmode&sanitize=true" align=middle width=138.9155922pt height=24.65753399999998pt/> <img src="/tex/74c5d8b0bed1bc87f919cbc158fde18a.svg?invert_in_darkmode&sanitize=true" align=middle width=43.83551204999999pt height=22.465723500000017pt/> 이라고 하면, 
+ <img src="/tex/64f62162627e2b7efb39973f1fa2a6ee.svg?invert_in_darkmode&sanitize=true" align=middle width=418.75552289999996pt height=24.65753399999998pt/> 
+ <img src="/tex/f77dd5b437cfb0fd0e0863140c411a77.svg?invert_in_darkmode&sanitize=true" align=middle width=393.18465614999997pt height=24.65753399999998pt/> 
+ <img src="/tex/5e47b9d64c7eae55c0a4211eaa217ad4.svg?invert_in_darkmode&sanitize=true" align=middle width=414.18929805pt height=24.65753399999998pt/>  이며,<br>
  <img src="/tex/cc1d135577a56717f43561ba7cce2370.svg?invert_in_darkmode&sanitize=true" align=middle width=212.10029445pt height=24.65753399999998pt/> 이다.
+ 
 - Multi-SVM loss에 대해서 생각해야할 것이 몇가지 있는데, formula에 근거해서 생각하면 됨.
     - 만약 정답 카테고리의 score가 기존의 스코어의 순서를 바꾸지 않는 한에서 변하면 loss의 변화는? $\rightarrow$ loss는 변하지 않는다.
     - Multi SVM loss의 가능한 값의 영역은? $\rightarrow$ (0, $\infty$), $L_i$ 의 값은 음수가 나오지 않도록 설계되었음.
@@ -51,6 +55,7 @@ def L_i(x, y, W):
     # accumulate loss for the i-th example
     loss_i += max(0, scores[j] - correct_class_score + delta)
   return loss_i
+  
 
 def L_i_vectorized(x, y, W):
   """
@@ -74,7 +79,7 @@ ___
 - 이러한 문제를 해결하기 위해 도입한 것이 바로 정규화(Regularization *회귀분석 Lasso, Ridge, Elastic Net*..) 
 - 정규화를 간단히 말하면, 우리가 구할 parameter에 대해서 penalty를 부여해서 간단한 모델로 만들어주겠다는 idea. 성능 향상과 overfitting 방지에도 도움이 됨.
 - formula
-<p align="center"><img src="/tex/f291636637402c1217fef1b02bc80cb2.svg?invert_in_darkmode&sanitize=true" align=middle width=587.4173959499999pt height=47.806078649999996pt/></p>
+<p align="center"><img src="/tex/745668059c3e045c7f46c21ba95f02d7.svg?invert_in_darkmode&sanitize=true" align=middle width=594.60520515pt height=47.806078649999996pt/></p>
 - Regularization 종류가 많음. 머신러닝, 딥러닝에도 많이 적용 됨.
     - L2 Regularization : (L2 norm) $\sum_k\sum_lW^2_{k,l} or \sum_k\sum_l\sqrt{W_{k,l}} $
     - L1 Regularization : (L1 norm) $\sum_k\sum_l|{W_{k,l}}|$ $\rightarrow$ encouraging sparsity. 파라미터가 적은 방향을 지향함. 통계학에서 Ridge의 경우 가설검정을 동반한다고 표현.
@@ -112,6 +117,7 @@ ___
 <p align="center"><img src="/tex/c98ac0c5ba438414b55ee1c87c77c3ab.svg?invert_in_darkmode&sanitize=true" align=middle width=213.59784434999997pt height=19.526994300000002pt/></p>
 <p align="center"><img src="/tex/1633ef5a1036a1d0fa849b6a5e6b69ef.svg?invert_in_darkmode&sanitize=true" align=middle width=285.70080824999997pt height=41.765103599999996pt/></p>
 <p align="center"><img src="/tex/9344b0dfd8445aaa07c66027332160a3.svg?invert_in_darkmode&sanitize=true" align=middle width=167.47236329999998pt height=42.8023266pt/></p>
+
 ___
 ### Softmax Classifier(Multinomial Logistic Regression) 
 - **이제부터 확률로 생각합니다 만세~**
@@ -121,7 +127,7 @@ ___
 <p align="center"><img src="/tex/1935475f7c6829beda884c09730dbb0b.svg?invert_in_darkmode&sanitize=true" align=middle width=308.52920009999997pt height=40.4852712pt/></p>
 - 왜 -log? 확률의 특성을 생각해서 1에 가까워지면 Loss가 최소가 되도록 Tuning한 것.
 - e.g. 고양이, 개, 개구리의 score가 <img src="/tex/244a22f4138a85e7d0b13e4d69b5cda4.svg?invert_in_darkmode&sanitize=true" align=middle width=99.54357599999997pt height=24.65753399999998pt/> 이라고하면 <br>
-<img src="/tex/244a22f4138a85e7d0b13e4d69b5cda4.svg?invert_in_darkmode&sanitize=true" align=middle width=99.54357599999997pt height=24.65753399999998pt/> <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/>exp <img src="/tex/f42df336eba6c0b08c880476808ebeab.svg?invert_in_darkmode&sanitize=true" align=middle width=119.63498084999998pt height=24.65753399999998pt/> <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/>normal <img src="/tex/dd1b217fde8a90b1aaab417bd35eb09f.svg?invert_in_darkmode&sanitize=true" align=middle width=111.41577149999999pt height=24.65753399999998pt/> <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> <img src="/tex/e3e4ee75efa2f31cb12a19aafd42cb95.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1406252pt height=24.65753399999998pt/>
+<img src="/tex/1feff6d0120c46caea4a9b8606d7d0cc.svg?invert_in_darkmode&sanitize=true" align=middle width=616.0670851499999pt height=24.65753399999998pt/>
 - softmax도 몇가지 생각해볼 거리가 있음.
     - loss의 가능한 영역은? $\rightarrow$ (0, $\infty$) 확률의 [0,1] 영역과 -log의 특성을 보면 알 수 있음.
     - $W$ 학습의 첫 iteration에서 $s\approx0$ 인 상황이 벌어지면 loss는? $\rightarrow$ logC, 역시 Debugging에 효율적임
@@ -133,6 +139,7 @@ ___
 - 또한 Cross Entropy는 Statistics 에서의 MLE 방법과 정확히 일치함.
     - negative log-likelihood를 minimize하는 것이므로 MLE와 정확히 일치함. 
 - 계산적인 측면에서 컴퓨팅 문제가 있어 실제 구현할때는 상수 C를 위아래로 곱해줌.
+
 ___
 ### Multiclass SVM loss & Softmax loss
 - 먼저 각각의 Loss 결과를 통해 얻은 스코어, 확률은 각각의 방법 안에서만 비교하는 것이 의미가 있음.
