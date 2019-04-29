@@ -2,6 +2,9 @@
 
 ## Concept
 - find $f(x)$ which has parameter(or weight)$w$
+
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;f(x)" />
+
 $$\text{Input} \rightarrow f(x, W) = Wx \rightarrow  \text{output score}$$
 - Example :
 
