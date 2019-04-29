@@ -1,9 +1,9 @@
 # CS231n - Lecture 2
 
 ## Concept
-- find $f(x)$ which has parameter(or weight)$w$
+- find <img src="https://latex.codecogs.com/svg.latex?\Large&space;f(x)" /> which has parameter(or weight)<img src="https://latex.codecogs.com/svg.latex?\Large&space;w" />
 
-<img src="https://latex.codecogs.com/svg.latex?\Large&space;f(x)" />
+
 
 $$\text{Input} \rightarrow f(x, W) = Wx \rightarrow  \text{output score}$$
 - Example :
