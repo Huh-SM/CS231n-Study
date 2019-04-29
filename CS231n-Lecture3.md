@@ -21,16 +21,16 @@ ___
 - 만약 계산된 3개의 사진에서 고양이, 개, 개구리인지 판단하는 스코어가 각각 <img src="/tex/65cafcffa0765f555e3f314b94197bf6.svg?invert_in_darkmode&sanitize=true" align=middle width=138.9155922pt height=24.65753399999998pt/> <img src="/tex/b3335b1b5f6bc000c6b11db1f99b9605.svg?invert_in_darkmode&sanitize=true" align=middle width=126.13015799999997pt height=24.65753399999998pt/> <img src="/tex/2439867047b3d6df03ee8e82a3608071.svg?invert_in_darkmode&sanitize=true" align=middle width=138.9155922pt height=24.65753399999998pt/> <img src="/tex/74c5d8b0bed1bc87f919cbc158fde18a.svg?invert_in_darkmode&sanitize=true" align=middle width=43.83551204999999pt height=22.465723500000017pt/> 이라고 하면, 
  <img src="/tex/64f62162627e2b7efb39973f1fa2a6ee.svg?invert_in_darkmode&sanitize=true" align=middle width=418.75552289999996pt height=24.65753399999998pt/> 
  <img src="/tex/f77dd5b437cfb0fd0e0863140c411a77.svg?invert_in_darkmode&sanitize=true" align=middle width=393.18465614999997pt height=24.65753399999998pt/> 
- <img src="/tex/5e47b9d64c7eae55c0a4211eaa217ad4.svg?invert_in_darkmode&sanitize=true" align=middle width=414.18929805pt height=24.65753399999998pt/>  이며,<br>
- <img src="/tex/cc1d135577a56717f43561ba7cce2370.svg?invert_in_darkmode&sanitize=true" align=middle width=212.10029445pt height=24.65753399999998pt/> 이다.
+ <img src="/tex/5e47b9d64c7eae55c0a4211eaa217ad4.svg?invert_in_darkmode&sanitize=true" align=middle width=414.18929805pt height=24.65753399999998pt/>  
+ <img src="/tex/cc1d135577a56717f43561ba7cce2370.svg?invert_in_darkmode&sanitize=true" align=middle width=212.10029445pt height=24.65753399999998pt/> 
  
 - Multi-SVM loss에 대해서 생각해야할 것이 몇가지 있는데, formula에 근거해서 생각하면 됨.
-    - 만약 정답 카테고리의 score가 기존의 스코어의 순서를 바꾸지 않는 한에서 변하면 loss의 변화는? $\rightarrow$ loss는 변하지 않는다.
-    - Multi SVM loss의 가능한 값의 영역은? $\rightarrow$ (0, $\infty$), $L_i$ 의 값은 음수가 나오지 않도록 설계되었음.
-    - $W$ 학습의 첫 iteration에서 $s\approx0$ 인 상황이 벌어지면 loss는? $\rightarrow$ loss = C-1, $\Delta=1$ 이라는 가정하에 이게 성립함. Debugging 시 유용한 방법.
-    - Multi SVM loss의 경우 정답 카테고리와 같은 카테고리를 계산하지 않지만, 만약 계산한다면? $\rightarrow$ $\Delta$ 만큼만 커지게 된다. 
-    - Summation을 하지 않고 mean을 사용하게 되면? $\rightarrow$ C-1(constant) 만큼의 scaling을 한 값으로 나올뿐 크게 변하지 않음.
-    - max의 sqaured version?(L2-SVM) $\rightarrow$ 이는 결과에 대해서 큰 차이를 불러온다고 함. Loss가 큰 경우에 대해 Penalty를 더 부여하는 효과를 가져와 차이가 있음. 이는 데이터에 따라 결정해야하는 부분임. CV 과정에서 판단할 수 있다고 함.
+- 만약 정답 카테고리의 score가 기존의 스코어의 순서를 바꾸지 않는 한에서 변하면 loss의 변화는? <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> loss는 변하지 않는다.
+- Multi SVM loss의 가능한 값의 영역은? <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> (0, <img src="/tex/f7a0f24dc1f54ce82fecccbbf48fca93.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/>), <img src="/tex/6af2b4e795d7f62666e31c283eb02410.svg?invert_in_darkmode&sanitize=true" align=middle width=15.838142099999992pt height=22.465723500000017pt/> 의 값은 음수가 나오지 않도록 설계되었음.
+- <img src="/tex/84c95f91a742c9ceb460a83f9b5090bf.svg?invert_in_darkmode&sanitize=true" align=middle width=17.80826024999999pt height=22.465723500000017pt/> 학습의 첫 iteration에서 <img src="/tex/2e4649eb610a632b8a13192a7ac57caf.svg?invert_in_darkmode&sanitize=true" align=middle width=37.84231934999999pt height=21.18721440000001pt/> 인 상황이 벌어지면 loss는? <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> loss = C-1, <img src="/tex/e70a40381a56333dfaa505fb450d143a.svg?invert_in_darkmode&sanitize=true" align=middle width=43.83551204999999pt height=22.465723500000017pt/> 이라는 가정하에 이게 성립함. Debugging 시 유용한 방법.
+- Multi SVM loss의 경우 정답 카테고리와 같은 카테고리를 계산하지 않지만, 만약 계산한다면? <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> <img src="/tex/7e9fe18dc67705c858c077c5ee292ab4.svg?invert_in_darkmode&sanitize=true" align=middle width=13.69867124999999pt height=22.465723500000017pt/> 만큼만 커지게 된다. 
+- Summation을 하지 않고 mean을 사용하게 되면? <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> C-1(constant) 만큼의 scaling을 한 값으로 나올뿐 크게 변하지 않음.
+- max의 sqaured version?(L2-SVM) <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> 이는 결과에 대해서 큰 차이를 불러온다고 함. Loss가 큰 경우에 대해 Penalty를 더 부여하는 효과를 가져와 차이가 있음. 이는 데이터에 따라 결정해야하는 부분임. CV 과정에서 판단할 수 있다고 함.
 - 일반적으로 max(0, ?) 꼴의 경우 **hinge loss** 라는 말로 불리기도 함.
 - 아래는 Multiclass SVM loss 의 구현버젼.
 
@@ -81,13 +81,11 @@ ___
 - formula
 <p align="center"><img src="/tex/745668059c3e045c7f46c21ba95f02d7.svg?invert_in_darkmode&sanitize=true" align=middle width=594.60520515pt height=47.806078649999996pt/></p>
 - Regularization 종류가 많음. 머신러닝, 딥러닝에도 많이 적용 됨.
-    - L2 Regularization : (L2 norm) $\sum_k\sum_lW^2_{k,l} or \sum_k\sum_l\sqrt{W_{k,l}} $
-    - L1 Regularization : (L1 norm) $\sum_k\sum_l|{W_{k,l}}|$ $\rightarrow$ encouraging sparsity. 파라미터가 적은 방향을 지향함. 통계학에서 Ridge의 경우 가설검정을 동반한다고 표현.
-        - 여기서 첨언하자면, L2와 L1의 형태에 대해서 생각해보면 이유를 알 수 있음. L2는 원형꼴을 따르며, L1은 마름모 꼴을 따르게 됨. 따라서 만약 마름모의 꼭지점에 걸려버리면, 그 지점은 일부 파라미터가 0 값이 지정됨. 이러한 이유로 sparsity를 지원하는듯.
-    - Elastic Net(L1+L2)
-    - Max Norm Regularization
-    - Dropout - DL에 많이 사용
-    - Batch Normalization, Stochastic depth - DL에 많이 사용
+- L2 Regularization : (L2 norm) <img src="/tex/e4aaf9a782a3f3f9583c9506a1bf8296.svg?invert_in_darkmode&sanitize=true" align=middle width=205.13343014999998pt height=27.73529880000001pt/>
+- L1 Regularization : (L1 norm) <img src="/tex/33597e6ef2fc01da8f53ec75e10f2968.svg?invert_in_darkmode&sanitize=true" align=middle width=94.18962959999999pt height=24.657735299999988pt/> <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> encouraging sparsity. 파라미터가 적은 방향을 지향함. 통계학에서 Ridge의 경우 가설검정을 동반한다고 표현.
+- 여기서 첨언하자면, L2와 L1의 형태에 대해서 생각해보면 이유를 알 수 있음. L2는 원형꼴을 따르며, L1은 마름모 꼴을 따르게 됨. 따라서 만약 마름모의 꼭지점에 걸려버리면, 그 지점은 일부 파라미터가 0 값이 지정됨. 이러한 이유로 sparsity를 지원하는듯.
+- cf) Elastic Net(L1+L2) /  Max Norm Regularization / Dropout - DL에 많이 사용 / Batch Normalization, Stochastic depth - DL에 많이 사용
+
 ___
 ### hyper-parameter?
 - 이제 현실적으로 우리가 지정해줘야할 hyper-parameter가 남았음. <img src="/tex/7e9fe18dc67705c858c077c5ee292ab4.svg?invert_in_darkmode&sanitize=true" align=middle width=13.69867124999999pt height=22.465723500000017pt/>와 <img src="/tex/fd8be73b54f5436a5cd2e73ba9b6bfa9.svg?invert_in_darkmode&sanitize=true" align=middle width=9.58908224999999pt height=22.831056599999986pt/>.
@@ -98,8 +96,8 @@ ___
 ___
 ### Additional Consideration
 - the # of classes = 2? <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> Binary SVM
-    - Loss function : $L_i=Cmax(0,1−y_iw^Tx_i)+R(W)$ $(-1<y_i<1)$
-    - $C$ 역시 hyper-parameter인데, multiclass에서의 $\lambda$와 비슷함. 관계는 $C\propto1/\lambda$.
+- Loss function : <img src="/tex/7b4e2b3e8e2d0aec570fb28830b24dea.svg?invert_in_darkmode&sanitize=true" align=middle width=234.80908935pt height=27.6567522pt/> <img src="/tex/abbda87fbc1c49b5a02accc53bc582da.svg?invert_in_darkmode&sanitize=true" align=middle width=99.37677419999999pt height=24.65753399999998pt/>
+- <img src="/tex/9b325b9e31e85137d1de765f43c0f8bc.svg?invert_in_darkmode&sanitize=true" align=middle width=12.92464304999999pt height=22.465723500000017pt/> 역시 hyper-parameter인데, multiclass에서의 <img src="/tex/fd8be73b54f5436a5cd2e73ba9b6bfa9.svg?invert_in_darkmode&sanitize=true" align=middle width=9.58908224999999pt height=22.831056599999986pt/>와 비슷함. 관계는 <img src="/tex/7de40c4f975c63ff4e83e093d8388d52.svg?invert_in_darkmode&sanitize=true" align=middle width=60.86977049999999pt height=24.65753399999998pt/>.
 - 기존 SVM과 관계가 많다고 하는데... 제가 SVM를 몰라서 ㅈㅅ합니다. 다시 찾아올게요.
 
 ___
@@ -128,26 +126,25 @@ ___
 - 왜 -log? 확률의 특성을 생각해서 1에 가까워지면 Loss가 최소가 되도록 Tuning한 것.
 - e.g. 고양이, 개, 개구리의 score가 <img src="/tex/244a22f4138a85e7d0b13e4d69b5cda4.svg?invert_in_darkmode&sanitize=true" align=middle width=99.54357599999997pt height=24.65753399999998pt/> 이라고하면 <br>
 <img src="/tex/1feff6d0120c46caea4a9b8606d7d0cc.svg?invert_in_darkmode&sanitize=true" align=middle width=616.0670851499999pt height=24.65753399999998pt/>
-- softmax도 몇가지 생각해볼 거리가 있음.
-    - loss의 가능한 영역은? $\rightarrow$ (0, $\infty$) 확률의 [0,1] 영역과 -log의 특성을 보면 알 수 있음.
-    - $W$ 학습의 첫 iteration에서 $s\approx0$ 인 상황이 벌어지면 loss는? $\rightarrow$ logC, 역시 Debugging에 효율적임
+- softmax도 몇가지 생각해볼 거리가 있음. <br>
+1) loss의 가능한 영역은? <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> (0, <img src="/tex/f7a0f24dc1f54ce82fecccbbf48fca93.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/>) 확률의 [0,1] 영역과 -log의 특성을 보면 알 수 있음. <br>
+2)<img src="/tex/84c95f91a742c9ceb460a83f9b5090bf.svg?invert_in_darkmode&sanitize=true" align=middle width=17.80826024999999pt height=22.465723500000017pt/> 학습의 첫 iteration에서 <img src="/tex/2e4649eb610a632b8a13192a7ac57caf.svg?invert_in_darkmode&sanitize=true" align=middle width=37.84231934999999pt height=21.18721440000001pt/> 인 상황이 벌어지면 loss는? <img src="/tex/e5d134f35dc4949fab12ec64d186248a.svg?invert_in_darkmode&sanitize=true" align=middle width=16.43840384999999pt height=14.15524440000002pt/> logC, 역시 Debugging에 효율적임
 - softmax 는 Full Cross Entropy 라고도 함. 왜냐?
-    - Information Theory에서 Cross Entropy는 true 분포의 p(x) 와 예측된 q(x) 간의 관계를 이용해 만든 식임.
+- Information Theory에서 Cross Entropy는 true 분포의 p(x) 와 예측된 q(x) 간의 관계를 이용해 만든 식임.
     $$ H(p,q) = -\sum_x p(x)logq(x) $$
-    - 여기서 p(x)는 정답 카테고리이기 떄문에 1이 반환되고, q(x)는 우리가 예측한 확률이 지정되는 형태를 갖게 되어 정확히 형태가 일치하게 됨
-    - True 집단과 Estimated 집단의 분포를을 비교하는 KL divergence적인 관점에서도 바라볼 수 있음. 다시 말해, 정답 카테고리의 분포에 최대한 비슷하게 갖다 붙여보겠다는 idea를 가진 것.
-- 또한 Cross Entropy는 Statistics 에서의 MLE 방법과 정확히 일치함.
-    - negative log-likelihood를 minimize하는 것이므로 MLE와 정확히 일치함. 
+- 여기서 p(x)는 정답 카테고리이기 떄문에 1이 반환되고, q(x)는 우리가 예측한 확률이 지정되는 형태를 갖게 되어 정확히 형태가 일치하게 됨
+- True 집단과 Estimated 집단의 분포를을 비교하는 KL divergence적인 관점에서도 바라볼 수 있음. 다시 말해, 정답 카테고리의 분포에 최대한 비슷하게 갖다 붙여보겠다는 idea를 가진 것.
+- 또한 Cross Entropy는 Statistics 에서의 MLE 방법과 정확히 일치함. negative log-likelihood를 minimize하는 것이므로 MLE와 정확히 일치함. 
 - 계산적인 측면에서 컴퓨팅 문제가 있어 실제 구현할때는 상수 C를 위아래로 곱해줌.
 
 ___
 ### Multiclass SVM loss & Softmax loss
 - 먼저 각각의 Loss 결과를 통해 얻은 스코어, 확률은 각각의 방법 안에서만 비교하는 것이 의미가 있음.
 - Softmax의 경우 결과로 확률을 제공한다는 점에서 신뢰성이 높다고 생각할 수 있다. 하지만, 이는 Regularization의 영향이 강해서 직접적으로 해석하는데 문제가 있다. <img src="/tex/fd8be73b54f5436a5cd2e73ba9b6bfa9.svg?invert_in_darkmode&sanitize=true" align=middle width=9.58908224999999pt height=22.831056599999986pt/>를 통해 강한 제약을 건다면, 확률이 유니폼 형태에 가까워지므로 곧이 곧대로 해석할 수 없다.
-- SVM과 Softmax를 비교하면,
-    - SVM의 경우 loss가 최소화되는 margin을 만족하면 거기서 더이상 개선하려고 하지 않음.
-    - 하지만 Softmax의 경우는 계속 더 나은 결과를 찾기위해 계산을 수행함.
-    
+- SVM과 Softmax를 비교하면, <br>
+1) SVM의 경우 loss가 최소화되는 margin을 만족하면 거기서 더이상 개선하려고 하지 않음. <br>
+2) 하지만 Softmax의 경우는 계속 더 나은 결과를 찾기위해 지속적으로 계산을 수행함.    
+
 ---
 ## How? Optimization!
 - Loss function을 이제 알았다면 이제 그것을 최소화 시키는 방법이 필요하다. 
