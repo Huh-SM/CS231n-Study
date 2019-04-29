@@ -5,7 +5,7 @@
 $$\text{Input} \rightarrow f(x, W) = Wx \rightarrow  \text{output score}$$
 - Example :
 
-\begin{document}
+$$
 \begin{bmatrix}
     0.2 & -0.5 & 0.1 & 2.0 \\
     1.5 & 1.3 & 2.1 & 0.0 \\
@@ -28,7 +28,7 @@ $$\text{Input} \rightarrow f(x, W) = Wx \rightarrow  \text{output score}$$
 \\
 W(weight)X(input) + b(bias) = Score
 
-\end{document}
+$$
 
 - (생각할 것) 보통 확률로 Classification을 수행하는데, score를 이용함으로서 classification 한다. (?)
 - (생각할 것) bias라 함은 error와 다른 개념? 일반적인 선형회귀에서 $\beta_0$ 와 같은 역할을 하는 것인가?
