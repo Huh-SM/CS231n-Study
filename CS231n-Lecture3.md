@@ -128,10 +128,10 @@ ___
 <img src="/tex/1feff6d0120c46caea4a9b8606d7d0cc.svg?invert_in_darkmode&sanitize=true" align=middle width=616.0670851499999pt height=24.65753399999998pt/>
 - softmax도 몇가지 생각해볼 거리가 있음. <br>
 1) loss의 가능한 영역은? <img src="/tex/b501694192ee148eb4c21e5fcaf60c5a.svg?invert_in_darkmode&sanitize=true" align=middle width=65.75343059999999pt height=24.65753399999998pt/> 확률의 [0,1] 영역과 -log의 특성을 보면 알 수 있음. <br>
-2) 학습의 첫 iteration에서 <img src="/tex/c92c3feaeb9e884ed24edce246350e72.svg?invert_in_darkmode&sanitize=true" align=middle width=155.224608pt height=22.831056599999986pt/>, 역시 Debugging에 효율적임 <br>
+2) 학습의 첫 iteration에서 <img src="/tex/c92c3feaeb9e884ed24edce246350e72.svg?invert_in_darkmode&sanitize=true" align=middle width=155.224608pt height=22.831056599999986pt/> 역시 Debugging에 효율적임 <br>
 3) softmax 는 Full Cross Entropy 라고도 함. 왜냐? <br>
 - Information Theory에서 Cross Entropy는 true 분포의 p(x) 와 예측된 q(x) 간의 관계를 이용해 만든 식임. <br>
-    $$ H(p,q) = -\sum_x p(x)logq(x) $$  <br>
+<p align="center"><img src="/tex/122d901bce8be5b4827f172c6cecb01e.svg?invert_in_darkmode&sanitize=true" align=middle width=197.40291119999998pt height=36.16460595pt/></p>
 - 여기서 p(x)는 정답 카테고리이기 떄문에 1이 반환되고, q(x)는 우리가 예측한 확률이 지정되는 형태를 갖게 되어 정확히 형태가 일치하게 됨 <br>
 - True 집단과 Estimated 집단의 분포를을 비교하는 KL divergence적인 관점에서도 바라볼 수 있음. 다시 말해, 정답 카테고리의 분포에 최대한 비슷하게 갖다 붙여보겠다는 idea를 가진 것. <br>
 - 또한 Cross Entropy는 Statistics 에서의 MLE 방법과 정확히 일치함. negative log-likelihood를 minimize하는 것이므로 MLE와 정확히 일치함.  <br>
