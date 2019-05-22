@@ -82,7 +82,7 @@ ___
 $$L(W)\text{ (full loss)} = \frac{1}{N}\sum_{i=1}^N L_i(f(x_i, W), y_i) \text{(data loss)} + \lambda R(W) \text{ (regularization loss)}$$
 - Regularization 종류가 많음. 머신러닝, 딥러닝에도 많이 적용 됨.<br>
 1) L2 Regularization : (L2 norm) $\sum_k\sum_lW^2_{k,l} or \sum_k\sum_l\sqrt{W_{k,l}} $
-2) L1 Regularization : (L1 norm) $\sum_k\sum_l|{W_{k,l}}| \rightarrow \text{encouraging sparsity}$. 파라미터가 적은 방향을 지향함. 통계학에서 Ridge의 경우 가설검정을 동반한다고 표현.
+2) L1 Regularization : (L1 norm) $\sum_k\sum_l|{W_{k,l}}| \rightarrow \text{encouraging sparsity}$. 파라미터가 적은 방향을 지향함. 통계학에서 Lasso의 경우 가설검정을 동반한다고 표현.
 - 여기서 첨언하자면, L2와 L1의 형태에 대해서 생각해보면 이유를 알 수 있음. L2는 원형꼴을 따르며, L1은 마름모 꼴을 따르게 됨. 따라서 만약 마름모의 꼭지점에 걸려버리면, 그 지점은 일부 파라미터가 0 값이 지정됨. 이러한 이유로 sparsity를 지원하는듯. <br>
 cf) Elastic Net(L1+L2) /  Max Norm Regularization / Dropout - DL에 많이 사용 / Batch Normalization, Stochastic depth - DL에 많이 사용
 
