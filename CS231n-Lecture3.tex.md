@@ -128,10 +128,10 @@ $$ L_i = -logPr(y=k|X=x_i) = -log\frac{e^{s_k}}{\sum_j e^{s_j}}$$
 $[3.2, 5.1, -1.7]\rightarrow exp[24.5, 164.0, 0.18]\rightarrow normal[0.13, 0.87, 0.00]\rightarrowL_i = -log(0.13) = 0.89 $
 - softmax도 몇가지 생각해볼 거리가 있음. <br>
 1) loss의 가능한 영역은? $\rightarrow (0, \infty) $ 확률의 [0,1] 영역과 -log의 특성을 보면 알 수 있음. <br>
-2) 학습의 첫 iteration에서 $s\approx 0 \text {인 상황이 벌어지면 loss는? }\rightarrow logC$, 역시 Debugging에 효율적임 <br>
+2) 학습의 첫 iteration에서 $s\approx 0 \text {인 상황이 벌어지면 loss는? }\rightarrow logC$ 역시 Debugging에 효율적임 <br>
 3) softmax 는 Full Cross Entropy 라고도 함. 왜냐? <br>
 - Information Theory에서 Cross Entropy는 true 분포의 p(x) 와 예측된 q(x) 간의 관계를 이용해 만든 식임. <br>
-    $$ H(p,q) = -\sum_x p(x)logq(x) $$  <br>
+$$ H(p,q) = -\sum_x p(x)logq(x) $$
 - 여기서 p(x)는 정답 카테고리이기 떄문에 1이 반환되고, q(x)는 우리가 예측한 확률이 지정되는 형태를 갖게 되어 정확히 형태가 일치하게 됨 <br>
 - True 집단과 Estimated 집단의 분포를을 비교하는 KL divergence적인 관점에서도 바라볼 수 있음. 다시 말해, 정답 카테고리의 분포에 최대한 비슷하게 갖다 붙여보겠다는 idea를 가진 것. <br>
 - 또한 Cross Entropy는 Statistics 에서의 MLE 방법과 정확히 일치함. negative log-likelihood를 minimize하는 것이므로 MLE와 정확히 일치함.  <br>
